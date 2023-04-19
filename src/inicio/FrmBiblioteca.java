@@ -12,10 +12,12 @@ package inicio;
 import Data.*;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 public class FrmBiblioteca extends javax.swing.JFrame {
     
     Data data;
-   // public ArrayList<CListaUsuarios> listaCategorias;
     private CListaUsuarios listaUsuarios;
     DefaultListModel modelo;
     
@@ -39,6 +41,16 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         
         cargarCategorias();
         
+        jListCategorias.addListSelectionListener(new ListSelectionListener() {
+        @Override
+        
+            public void valueChanged(ListSelectionEvent e) {
+                String selectedValue = jListCategorias.getSelectedValue();
+                txtCategoria.setText(selectedValue);
+                txtCategoria.setEditable(false);
+            }
+        
+        });
     }
 
     /**
@@ -63,7 +75,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         btnAgregarCategoria = new javax.swing.JButton();
         btnEliminarCateogoria = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        txtCategoriaPorAgregar = new javax.swing.JTextField();
+        txtCategoria = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -121,6 +133,11 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         });
 
         btnEliminarCateogoria.setText("Eliminar Categoria");
+        btnEliminarCateogoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarCateogoriaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Usuario:");
 
@@ -140,7 +157,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(jLabel2)
-                            .addComponent(txtCategoriaPorAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminarCateogoria, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,10 +182,11 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegresar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(txtUsuarioRegistrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtUsuarioRegistrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -189,7 +207,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregarCategoria)
-                    .addComponent(txtCategoriaPorAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminarCateogoria)
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -213,21 +231,37 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioRegistradoActionPerformed
 
     private void btnAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriaActionPerformed
-        String nuevaCategoria = txtCategoriaPorAgregar.getText().trim();
+        String nuevaCategoria = txtCategoria.getText().trim();
         //CNodoUsuario categoriaPorAgregar = new CNodoUsuario();
         //listaCategorias.add(categoriaPorAgregar);
         
         
         usuarioActual.AgregarCategoria(nuevaCategoria);
         cargarCategorias();
+        txtCategoria.setText("");
                 
         
     }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
 
+    private void btnEliminarCateogoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCateogoriaActionPerformed
+       String categoriaSeleccionada = txtCategoria.getText().trim();
+         
+           if( categoriaSeleccionada.isBlank()){
+                JOptionPane.showMessageDialog(this,  "No hay categoria para eliminar");
+                txtCategoria.setText("");
+                txtCategoria.setEditable(true);
+                return;
+            }
+        
+        usuarioActual.eliminarCategoria(categoriaSeleccionada);
+        cargarCategorias();
+        txtCategoria.setEditable(true);
+        
+    }//GEN-LAST:event_btnEliminarCateogoriaActionPerformed
+
+    
     private void cargarCategorias(){
         ArrayList<String> listaCategorias = usuarioActual.getListaCategorias();
-        
-        //jListCategorias.removeAll();
         
         modelo.removeAllElements();
         for (int i = 0; i < listaCategorias.size(); i++) {
@@ -286,7 +320,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     private javax.swing.JList<String> jListCategorias;
     private javax.swing.JPanel jPanelmagenSeleccionada;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField txtCategoriaPorAgregar;
+    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtUsuarioRegistrado;
     // End of variables declaration//GEN-END:variables
 }

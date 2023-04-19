@@ -227,29 +227,10 @@ public class Inicio extends javax.swing.JFrame {
                 frmBiblioteca.setLocationRelativeTo(null);
                 frmBiblioteca.setVisible(true);
                 this.setVisible(false);
-                
-                
-                
             } else {
                 JOptionPane.showMessageDialog( this,  "Usuario no encontrado!");
                 txtUsuario.setText("");
             }
-        
-//        if(listaUsuarios.VerificarUsuarioEnLista(usuario)==true){
-//            FrmBiblioteca frmBiblioteca = new FrmBiblioteca(data, usuario);     
-//            frmBiblioteca.setDefaultCloseOperation(FrmBiblioteca.DISPOSE_ON_CLOSE);
-//            frmBiblioteca.setLocationRelativeTo(null);
-//            frmBiblioteca.setVisible(true);
-//            this.setVisible(false);
-//        }else{
-//            JOptionPane.showMessageDialog( this,  "Usuario no encontrado!");
-//            txtUsuario.setText("");
-//
-//        }
-
-  
-        
-    
         
         
     }//GEN-LAST:event_btnIngresarBibliotecaActionPerformed

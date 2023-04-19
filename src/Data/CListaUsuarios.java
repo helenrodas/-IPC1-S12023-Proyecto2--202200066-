@@ -15,27 +15,6 @@ public class CListaUsuarios {
     }
     
    
-    
-//    public void agregarAlInicio(CNodoUsuario nodoUsuario){
-//    String nombreUsuario = nodoUsuario.GetNombreUsuario(nodoUsuario);
-//    CNodoUsuario nuevoUsuario = new CNodoUsuario(nodoUsuario,inicio);
-//    nuevoUsuario.nodoSiguiente = inicio;
-//    inicio = nuevoUsuario;
-//
-//    if(fin == null){
-//        fin = inicio;
-//    }
-//}
-    
-//   public  void agregarAlInicio(CNodoUsuario nodoUsuario) {
-//		
-//		CNodoUsuario temp = new CNodoUsuario(nodoUsuario);
-//		temp.next = head;
-//		head = temp;
-//		
-//	}
-   
-    
     public void insertarNodo(CNodoUsuario nuevoNodo) {
     if (inicio == null) {
         inicio = nuevoNodo;

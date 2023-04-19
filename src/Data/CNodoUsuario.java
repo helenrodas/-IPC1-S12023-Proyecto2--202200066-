@@ -50,30 +50,16 @@ public class CNodoUsuario {
         ListaCategorias.add(categoria);
     }
     
-//    public CNodoUsuario GetNodoUsuario(String usuario){
-//         CNodoUsuario temporal = nodoNuevo;
-//        
-//        while(temporal != null ){
-//            if(temporal.nodoNuevo.equals(usuario)){
-//                return temporal;
-//            }
-//  
-//            temporal=temporal.nodoSiguiente;
-//        }
-//        return  null;
-//    }
+    public void eliminarCategoria(String categoria){
+        
+        for (int i = 0; i < ListaCategorias.size(); i++) {
+            if(categoria.equals(ListaCategorias.get(i))){
+            ListaCategorias.remove(i);
+            }
+        }
+    }
     
-//    public String GetNombreUsuario(CNodoUsuario nodoUsuario){
-//        CNodoUsuario temporal=nodoNuevo;
-//        
-//        while(temporal != null ){
-//            if(temporal.nombreUsuario.equals(nodoUsuario.GetNombreUsuario(nodoUsuario))){
-//                return nombreUsuario;
-//            }
-//  
-//            temporal=temporal.nodoSiguiente;
-//        }
-//        return  null;
-//    }
+    
+
     
 }

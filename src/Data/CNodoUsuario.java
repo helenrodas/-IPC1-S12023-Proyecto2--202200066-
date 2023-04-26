@@ -14,11 +14,13 @@ public class CNodoUsuario {
    
     public CNodoUsuario nodoSiguiente;
     public String nombreUsuario;
+    public CListaImagenes ListaImagenes;
     private ArrayList<String> ListaCategorias;
     
     public CNodoUsuario(String nombreUsuario){
         this.nombreUsuario = nombreUsuario;
         ListaCategorias=new ArrayList<>();
+        ListaImagenes=new CListaImagenes();
         ListaCategorias.add("General");
     }
 
@@ -49,7 +51,16 @@ public class CNodoUsuario {
     public void AgregarCategoria(String categoria){
         ListaCategorias.add(categoria);
     }
+
+    public CListaImagenes getListaImagenes() {
+        return ListaImagenes;
+    }
+
+    public void setListaImagenes(CListaImagenes ListaImagenes) {
+        this.ListaImagenes = ListaImagenes;
+    }
     
+
     public void eliminarCategoria(String categoria){
         
         for (int i = 0; i < ListaCategorias.size(); i++) {
@@ -58,8 +69,5 @@ public class CNodoUsuario {
             }
         }
     }
-    
-    
-
-    
+   
 }

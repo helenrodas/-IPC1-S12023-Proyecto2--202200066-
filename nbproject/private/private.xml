@@ -3,13 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/inicio/FrmBiblioteca.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/HandlersImagen/BlancoYNegroJPG.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/inicio/FrmEditor.java</file>
             <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/inicio/Inicio.java</file>
-            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Data/CListaUsuarios.java</file>
-            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Data/CNodoUsuario.java</file>
             <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Data/Data.java</file>
-            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/main/Main.java</file>
-            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/inicio/FrmCrearUsuario.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/HandlersImagen/RgbJPG.java</file>
         </group>
     </open-files>
 </project-private>

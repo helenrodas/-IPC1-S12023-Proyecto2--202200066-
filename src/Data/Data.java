@@ -10,9 +10,11 @@ package Data;
  */
 public class Data {
     private CListaUsuarios ListaUsuarios;
+    private CListaImagenes ListaImagenes;
     
     public Data(){
         ListaUsuarios = new CListaUsuarios();
+        ListaImagenes = new CListaImagenes();
     }
 
     public CListaUsuarios getListaUsuarios() {
@@ -21,6 +23,14 @@ public class Data {
 
     public void setListaUsuarios(CListaUsuarios ListaUsuarios) {
         this.ListaUsuarios = ListaUsuarios;
+    }
+
+    public CListaImagenes getListaImagenes() {
+        return ListaImagenes;
+    }
+
+    public void setListaImagenes(CListaImagenes ListaImagenes) {
+        this.ListaImagenes = ListaImagenes;
     }
     
     

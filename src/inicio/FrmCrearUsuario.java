@@ -109,7 +109,7 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         if(evt.getSource()==btnRegresar){
-           Inicio Inicio = new Inicio(data);  
+           FrmLogIn Inicio = new FrmLogIn(data);  
             Inicio.setDefaultCloseOperation(FrmCrearUsuario.DISPOSE_ON_CLOSE);
             Inicio.setLocationRelativeTo(null);
             Inicio.setVisible(true);

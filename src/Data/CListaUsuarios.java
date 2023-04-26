@@ -9,11 +9,7 @@ package Data;
  * @author lenovo
  */
 public class CListaUsuarios {
-    protected CNodoUsuario inicio;
-
-    public CListaUsuarios(){
-    }
-    
+    private CNodoUsuario inicio;    
    
     public void insertarNodo(CNodoUsuario nuevoNodo) {
     if (inicio == null) {

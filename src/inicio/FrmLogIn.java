@@ -13,13 +13,13 @@ import Data.*;
 
 import javax.swing.JOptionPane;
 
-public class Inicio extends javax.swing.JFrame {
+public class FrmLogIn extends javax.swing.JFrame {
 
   Data data;
   private CListaUsuarios listaUsuarios;
   
  
-    public Inicio(Data data) {
+    public FrmLogIn(Data data) {
         initComponents();
         this.data=data;
         this.setTitle("Ugallery");
@@ -126,6 +126,11 @@ public class Inicio extends javax.swing.JFrame {
 
         btnIngresoEditor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnIngresoEditor.setText("Ingresar a Editor");
+        btnIngresoEditor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresoEditorActionPerformed(evt);
+            }
+        });
 
         btnIngresoConvertidor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnIngresoConvertidor.setText("Ingresar a Convertidor");
@@ -235,6 +240,16 @@ public class Inicio extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnIngresarBibliotecaActionPerformed
 
+    private void btnIngresoEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoEditorActionPerformed
+       if(evt.getSource()== btnIngresoEditor){
+            FrmEditor editor = new FrmEditor(data);  
+            editor.setDefaultCloseOperation(FrmEditor.DISPOSE_ON_CLOSE);
+            editor.setLocationRelativeTo(null);
+            editor.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btnIngresoEditorActionPerformed
+
     
             public void CloseAutenticacion(){
             super.dispose();
@@ -256,20 +271,20 @@ public class Inicio extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Inicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new Inicio().setVisible(true);
+//                new FrmLogIn().setVisible(true);
 //            }
 //        });
 //    }

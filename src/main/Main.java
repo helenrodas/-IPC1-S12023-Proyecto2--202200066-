@@ -4,7 +4,7 @@
  */
 package main;
 
-import inicio.Inicio;
+import inicio.FrmLogIn;
 
 /**
  *
@@ -21,11 +21,9 @@ public class Main {
     public static void main(String[] args) {
         Data data = new Data();
         
-       //data.Init();
-        
-        Inicio Inicio = new Inicio(data);
-        Inicio.setLocationRelativeTo(null);
-        Inicio.setVisible(true);
+        FrmLogIn inicio = new FrmLogIn(data);
+        inicio.setLocationRelativeTo(null);
+        inicio.setVisible(true);
     }
     
 }

@@ -10,19 +10,25 @@ package inicio;
  */
 
 import Data.*;
+import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 public class FrmBiblioteca extends javax.swing.JFrame {
     
     Data data;
     private CListaUsuarios listaUsuarios;
+    private CListaImagenes listaImagenes;
     DefaultListModel modelo;
     
-    
     CNodoUsuario usuarioActual;
+    CNodoImagen imagenActual;
+    CNodoImagen imagenTemporal;
     /**
      * Creates new form FrmBibliotecaa
      */
@@ -31,12 +37,12 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         this.data=data;
         modelo = new DefaultListModel();
         listaUsuarios=data.getListaUsuarios();
+        //listaImagenes = data.getListaImagenes();
         
         usuarioActual = listaUsuarios.GetUsuario(nombreUsuario);
         
         txtUsuarioRegistrado.setText(nombreUsuario);
     
-        //listaUsuarios=data.getUsuarios();
         jListCategorias.setModel(modelo);
         
         cargarCategorias();
@@ -48,6 +54,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 String selectedValue = jListCategorias.getSelectedValue();
                 txtCategoria.setText(selectedValue);
                 txtCategoria.setEditable(false);
+                lblImagen.setIcon(null);
             }
         
         });
@@ -66,8 +73,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListCategorias = new javax.swing.JList<>();
-        jPanelmagenSeleccionada = new javax.swing.JPanel();
-        jComboBoxImagenes = new javax.swing.JComboBox<>();
         btnAgregarImagen = new javax.swing.JButton();
         btnEliminarImagen = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -76,11 +81,17 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         btnEliminarCateogoria = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtCategoria = new javax.swing.JTextField();
+        lblImagen = new javax.swing.JLabel();
+        btnSiguiente = new javax.swing.JButton();
+        btnAnterior = new javax.swing.JButton();
+        btnMostrarImagenes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
         jLabel1.setText("Biblioteca");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(302, 14, 95, -1));
 
         btnRegresar.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -90,31 +101,32 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 14, -1, -1));
 
         jListCategorias.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jListCategorias.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(jListCategorias);
 
-        jPanelmagenSeleccionada.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanelmagenSeleccionadaLayout = new javax.swing.GroupLayout(jPanelmagenSeleccionada);
-        jPanelmagenSeleccionada.setLayout(jPanelmagenSeleccionadaLayout);
-        jPanelmagenSeleccionadaLayout.setHorizontalGroup(
-            jPanelmagenSeleccionadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanelmagenSeleccionadaLayout.setVerticalGroup(
-            jPanelmagenSeleccionadaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 334, Short.MAX_VALUE)
-        );
-
-        jComboBoxImagenes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 118, 368));
 
         btnAgregarImagen.setText("Agregar Imagen");
+        btnAgregarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarImagenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAgregarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, -1, -1));
 
         btnEliminarImagen.setText("Eliminar Imagen");
+        btnEliminarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarImagenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnEliminarImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, -1, -1));
 
         jLabel2.setText("Cateogrias");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
         txtUsuarioRegistrado.setEditable(false);
         txtUsuarioRegistrado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -124,6 +136,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 txtUsuarioRegistradoActionPerformed(evt);
             }
         });
+        getContentPane().add(txtUsuarioRegistrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 14, 98, -1));
 
         btnAgregarCategoria.setText("Agregar Categoria");
         btnAgregarCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +144,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 btnAgregarCategoriaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnAgregarCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 450, 150, -1));
 
         btnEliminarCateogoria.setText("Eliminar Categoria");
         btnEliminarCateogoria.addActionListener(new java.awt.event.ActionListener() {
@@ -138,87 +152,46 @@ public class FrmBiblioteca extends javax.swing.JFrame {
                 btnEliminarCateogoriaActionPerformed(evt);
             }
         });
+        getContentPane().add(btnEliminarCateogoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, 150, -1));
 
         jLabel3.setText("Usuario:");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(541, 20, -1, -1));
+        getContentPane().add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 118, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegresar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtUsuarioRegistrado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEliminarCateogoria, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPanelmagenSeleccionada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBoxImagenes, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnAgregarImagen)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnEliminarImagen)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
-                                    .addComponent(jLabel3)
-                                    .addGap(100, 100, 100))
-                                .addComponent(btnAgregarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(20, Short.MAX_VALUE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegresar)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtUsuarioRegistrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnAgregarImagen)
-                            .addComponent(btnEliminarImagen))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
-                        .addGap(8, 8, 8)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBoxImagenes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelmagenSeleccionada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgregarCategoria)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminarCateogoria)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
+        lblImagen.setBackground(new java.awt.Color(255, 255, 255));
+        lblImagen.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 430, 350));
+
+        btnSiguiente.setText(">>");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 250, 49, -1));
+
+        btnAnterior.setText("<<");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 49, -1));
+
+        btnMostrarImagenes.setText("Mostrar Imagenes");
+        btnMostrarImagenes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarImagenesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnMostrarImagenes, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         if(evt.getSource()==btnRegresar){
-            Inicio Inicio = new Inicio(data);
+            FrmLogIn Inicio = new FrmLogIn(data);
             Inicio.setDefaultCloseOperation(FrmCrearUsuario.DISPOSE_ON_CLOSE);
             Inicio.setLocationRelativeTo(null);
             Inicio.setVisible(true);
@@ -258,6 +231,106 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         txtCategoria.setEditable(true);
         
     }//GEN-LAST:event_btnEliminarCateogoriaActionPerformed
+
+    private void btnAgregarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarImagenActionPerformed
+        String rutaImagen="";
+        String categoriaSeleccionada = jListCategorias.getSelectedValue();
+        
+        if(categoriaSeleccionada==null){
+          JOptionPane.showMessageDialog( this,  "Debe seleccionar categoria!");
+          return;
+        }
+        
+        JFileChooser jfileChooser = new JFileChooser();
+        FileNameExtensionFilter extensionImagen = new FileNameExtensionFilter("JPG", "jpg");
+        jfileChooser.setFileFilter(extensionImagen);
+        
+        int accionPorEjecutar = jfileChooser.showOpenDialog(this);
+        
+        if(accionPorEjecutar==jfileChooser.APPROVE_OPTION){
+            rutaImagen = jfileChooser.getSelectedFile().getPath();
+
+            usuarioActual.ListaImagenes.agregar(rutaImagen, categoriaSeleccionada);
+           // listaImagenes.agregar(rutaImagen, categoriaSeleccionada);
+            JOptionPane.showMessageDialog( this,  "Imagen Agregada!");
+        }
+    }//GEN-LAST:event_btnAgregarImagenActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        String rutaTemporal = "";
+        String categoriaSeleccionada = jListCategorias.getSelectedValue();
+        imagenTemporal = usuarioActual.getListaImagenes().getInicio(); 
+       
+        
+        
+        if(imagenTemporal != null){
+            if(categoriaSeleccionada.equals(imagenTemporal.getCategoria())) {
+                rutaTemporal = imagenTemporal.getImagePath();
+                Image imagenNueva = new ImageIcon(rutaTemporal).getImage();
+                ImageIcon iconoNuevo = new ImageIcon(imagenNueva.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+                lblImagen.setIcon(iconoNuevo);
+            }
+            imagenTemporal=imagenTemporal.getNodoSiguiente();     
+        }
+        
+        if(imagenTemporal == null){
+                imagenTemporal= usuarioActual.getListaImagenes().getInicio(); 
+            }
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+         String rutaTemporal = "";
+         String categoriaSeleccionada = jListCategorias.getSelectedValue();
+         
+        if(imagenTemporal != null){
+            if(categoriaSeleccionada.equals(imagenTemporal.getCategoria())) {
+                rutaTemporal = imagenTemporal.getImagePath();
+                Image imagenNueva = new ImageIcon(rutaTemporal).getImage();
+                ImageIcon iconoNuevo = new ImageIcon(imagenNueva.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+                lblImagen.setIcon(iconoNuevo);
+            }
+            imagenTemporal=imagenTemporal.getNodoAnterior();
+   
+        }
+        
+        if(imagenTemporal == null){
+                imagenTemporal=usuarioActual.getListaImagenes().getFinListaImagenes();
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnMostrarImagenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarImagenesActionPerformed
+    String categoriaSeleccionada = jListCategorias.getSelectedValue();
+    String rutaImagen="";
+    String rutaTemporal = "";
+
+    imagenActual = usuarioActual.getListaImagenes().getInicio();
+
+    while(imagenActual != null) {
+        if(categoriaSeleccionada.equals(imagenActual.getCategoria())) {
+            rutaTemporal = imagenActual.getImagePath();
+            Image imagenNueva = new ImageIcon(rutaTemporal).getImage();
+            ImageIcon iconoNuevo = new ImageIcon(imagenNueva.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+            lblImagen.setIcon(iconoNuevo);
+            btnAnterior.setEnabled(true);
+            btnSiguiente.setEnabled(true);
+            break; 
+        }
+        imagenActual = imagenActual.getNodoSiguiente(); 
+    }
+
+    if(imagenActual == null) { 
+        lblImagen.setIcon(null);           
+        JOptionPane.showMessageDialog( this,  "No hay imagenes para mostrar!");
+        btnAnterior.setEnabled(false);
+        btnSiguiente.setEnabled(false);
+    }
+
+             
+    }//GEN-LAST:event_btnMostrarImagenesActionPerformed
+
+    private void btnEliminarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarImagenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarImagenActionPerformed
 
     
     private void cargarCategorias(){
@@ -310,16 +383,18 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCategoria;
     private javax.swing.JButton btnAgregarImagen;
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEliminarCateogoria;
     private javax.swing.JButton btnEliminarImagen;
+    private javax.swing.JButton btnMostrarImagenes;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> jComboBoxImagenes;
+    private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jListCategorias;
-    private javax.swing.JPanel jPanelmagenSeleccionada;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtUsuarioRegistrado;
     // End of variables declaration//GEN-END:variables

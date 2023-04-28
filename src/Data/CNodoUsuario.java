@@ -5,6 +5,7 @@
 package Data;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,4 +71,13 @@ public class CNodoUsuario {
         }
     }
    
+    public boolean GetCategoria(String categoria){
+        
+        for (int i = 0; i < ListaCategorias.size(); i++) {
+            if(categoria.equals(ListaCategorias.get(i))){
+                return true;
+            }
+        }
+      return false;
+    }
 }

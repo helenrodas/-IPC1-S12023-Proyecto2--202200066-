@@ -6,8 +6,15 @@ package inicio;
 
 import Data.Data;
 import HandlersImagen.BlancoYNegroJPG;
+import HandlersImagen.CambioJpgBmp;
+import HandlersImagen.CopiaJpg;
+import HandlersImagen.ModificarJPG;
 import HandlersImagen.RgbJPG;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import proyecto2.JPEGHandler;
 
 /**
@@ -16,6 +23,7 @@ import proyecto2.JPEGHandler;
  */
 public class FrmEditor extends javax.swing.JFrame {
     Data data;
+    String rutaImagen="";
     /**
      * Creates new form FrmEditor
      */
@@ -43,10 +51,16 @@ public class FrmEditor extends javax.swing.JFrame {
         jCheckBoxCopiarAJpg = new javax.swing.JCheckBox();
         jCheckBoxModificarImagen = new javax.swing.JCheckBox();
         jCheckBoxBlancoNegro = new javax.swing.JCheckBox();
+        lblImagenEditor = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnSeleccionarImagen.setText("Seleccionar Imagen");
+        btnSeleccionarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImagenActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -79,14 +93,27 @@ public class FrmEditor extends javax.swing.JFrame {
         buttonGroup1.add(jCheckBoxJpgABmp);
         jCheckBoxJpgABmp.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxJpgABmp.setText("JPG a BMP y viceversa");
+        jCheckBoxJpgABmp.setActionCommand("Jpg_Bmp");
+        jCheckBoxJpgABmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxJpgABmpActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jCheckBoxCopiarAJpg);
         jCheckBoxCopiarAJpg.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxCopiarAJpg.setText("Copiar a JPG");
+        jCheckBoxCopiarAJpg.setActionCommand("Copiar_JPG");
 
         buttonGroup1.add(jCheckBoxModificarImagen);
         jCheckBoxModificarImagen.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxModificarImagen.setText("Modificar Imagen");
+        jCheckBoxModificarImagen.setActionCommand("Modificar_Imagen");
+        jCheckBoxModificarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxModificarImagenActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jCheckBoxBlancoNegro);
         jCheckBoxBlancoNegro.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
@@ -126,6 +153,8 @@ public class FrmEditor extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
+        lblImagenEditor.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,11 +166,13 @@ public class FrmEditor extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
-                                .addComponent(btnSeleccionarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(79, 79, 79)
-                                .addComponent(btnEjecutar))))
+                                .addComponent(btnEjecutar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblImagenEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSeleccionarImagen, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnRegresar)))
@@ -156,7 +187,9 @@ public class FrmEditor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSeleccionarImagen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblImagenEditor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEjecutar))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -180,7 +213,12 @@ public class FrmEditor extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxRGBActionPerformed
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
-       if( !validarCamposEditor() ){
+       if(lblImagenEditor.getIcon() == null){
+          JOptionPane.showMessageDialog(this, "Debe seleccionar una imagen!", "Error", JOptionPane.ERROR_MESSAGE);   
+          return;
+        }
+
+        if( !validarCamposEditor() ){
             return;
         }
         
@@ -188,7 +226,7 @@ public class FrmEditor extends javax.swing.JFrame {
         
         switch(opcionDeEdicion) {
             case "Blanco_Negro":
-                BlancoYNegroJPG handlerBn = new BlancoYNegroJPG("C:/Users/lenovo/Downloads/imagenCoco.jpg");
+                BlancoYNegroJPG handlerBn = new BlancoYNegroJPG(rutaImagen);
                 try {
                     JPEGHandler.runHandler(handlerBn);
                 } catch (Exception e) {
@@ -196,18 +234,68 @@ public class FrmEditor extends javax.swing.JFrame {
                 }
                 break;
             case "RGB":
-                RgbJPG handlerRgb = new RgbJPG("C:/Users/lenovo/Downloads/imagenCoco.jpg");
+                RgbJPG handlerRgb = new RgbJPG(rutaImagen);
                 try {
                     JPEGHandler.runHandler(handlerRgb);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
+            case "Modificar_Imagen":
+                ModificarJPG handlerModificar = new ModificarJPG(rutaImagen);
+                try {
+                    JPEGHandler.runHandler(handlerModificar);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;  
+            case "Jpg_Bmp":
+                CambioJpgBmp handlerCambiar = new CambioJpgBmp(rutaImagen);
+                try {
+                    JPEGHandler.runHandler(handlerCambiar);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;  
+            case "Copiar_JPG":
+                CopiaJpg handlerCopiaJpg = new CopiaJpg(rutaImagen);
+                try {
+                    JPEGHandler.runHandler(handlerCopiaJpg);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;  
+                
             default:
-                JOptionPane.showMessageDialog(this,  "Seleccione una opcion");
+                //JOptionPane.showMessageDialog(this,  "Seleccione una opcion");
                 break;
        }
     }//GEN-LAST:event_btnEjecutarActionPerformed
+
+    private void jCheckBoxModificarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxModificarImagenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxModificarImagenActionPerformed
+
+    private void jCheckBoxJpgABmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxJpgABmpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxJpgABmpActionPerformed
+
+    private void btnSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImagenActionPerformed
+        
+        JFileChooser jfileChooser = new JFileChooser();
+        FileNameExtensionFilter extensionImagen = new FileNameExtensionFilter("JPG", "jpg");
+        jfileChooser.setFileFilter(extensionImagen);
+        
+        int accionPorEjecutar = jfileChooser.showOpenDialog(this);
+        
+        if(accionPorEjecutar==jfileChooser.APPROVE_OPTION){
+            rutaImagen = jfileChooser.getSelectedFile().getPath();
+            Image imagenNueva = new ImageIcon(rutaImagen).getImage();
+            ImageIcon iconoNuevo = new ImageIcon(imagenNueva.getScaledInstance(lblImagenEditor.getWidth(), lblImagenEditor.getHeight(), Image.SCALE_SMOOTH));
+            lblImagenEditor.setIcon(iconoNuevo);
+            
+        }
+    }//GEN-LAST:event_btnSeleccionarImagenActionPerformed
 
 
 private boolean validarCamposEditor(){
@@ -267,5 +355,6 @@ private boolean validarCamposEditor(){
     private javax.swing.JCheckBox jCheckBoxModificarImagen;
     private javax.swing.JCheckBox jCheckBoxRGB;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblImagenEditor;
     // End of variables declaration//GEN-END:variables
 }

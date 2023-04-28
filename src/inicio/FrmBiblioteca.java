@@ -23,7 +23,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     
     Data data;
     private CListaUsuarios listaUsuarios;
-    private CListaImagenes listaImagenes;
     DefaultListModel modelo;
     
     CNodoUsuario usuarioActual;
@@ -37,10 +36,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         this.data=data;
         modelo = new DefaultListModel();
         listaUsuarios=data.getListaUsuarios();
-        //listaImagenes = data.getListaImagenes();
-        
         usuarioActual = listaUsuarios.GetUsuario(nombreUsuario);
-        
         txtUsuarioRegistrado.setText(nombreUsuario);
     
         jListCategorias.setModel(modelo);
@@ -205,22 +201,24 @@ public class FrmBiblioteca extends javax.swing.JFrame {
 
     private void btnAgregarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCategoriaActionPerformed
         String nuevaCategoria = txtCategoria.getText().trim();
-        //CNodoUsuario categoriaPorAgregar = new CNodoUsuario();
-        //listaCategorias.add(categoriaPorAgregar);
         
+        if (usuarioActual.GetCategoria(nuevaCategoria)==true) {
+            JOptionPane.showMessageDialog(this, "Categoria ya existe!", "Error", JOptionPane.ERROR_MESSAGE);
+            txtCategoria.setText("");
+            return;
+        }
         
         usuarioActual.AgregarCategoria(nuevaCategoria);
         cargarCategorias();
         txtCategoria.setText("");
-                
-        
+   
     }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
 
     private void btnEliminarCateogoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCateogoriaActionPerformed
        String categoriaSeleccionada = txtCategoria.getText().trim();
          
            if( categoriaSeleccionada.isBlank()){
-                JOptionPane.showMessageDialog(this,  "No hay categoria para eliminar");
+                JOptionPane.showMessageDialog(this, "No hay categoria para eliminar!", "Error", JOptionPane.ERROR_MESSAGE);
                 txtCategoria.setText("");
                 txtCategoria.setEditable(true);
                 return;
@@ -237,7 +235,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         String categoriaSeleccionada = jListCategorias.getSelectedValue();
         
         if(categoriaSeleccionada==null){
-          JOptionPane.showMessageDialog( this,  "Debe seleccionar categoria!");
+          JOptionPane.showMessageDialog(this, "Debe seleccionar Categoria!", "Error", JOptionPane.ERROR_MESSAGE);
           return;
         }
         
@@ -251,7 +249,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
             rutaImagen = jfileChooser.getSelectedFile().getPath();
 
             usuarioActual.ListaImagenes.agregar(rutaImagen, categoriaSeleccionada);
-           // listaImagenes.agregar(rutaImagen, categoriaSeleccionada);
             JOptionPane.showMessageDialog( this,  "Imagen Agregada!");
         }
     }//GEN-LAST:event_btnAgregarImagenActionPerformed
@@ -320,7 +317,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
 
     if(imagenActual == null) { 
         lblImagen.setIcon(null);           
-        JOptionPane.showMessageDialog( this,  "No hay imagenes para mostrar!");
+        JOptionPane.showMessageDialog(this, "No hay imagenes para mostrar!", "Error", JOptionPane.ERROR_MESSAGE);
         btnAnterior.setEnabled(false);
         btnSiguiente.setEnabled(false);
     }

@@ -120,8 +120,14 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         String nombreUsuario = txtUsuarioNuevo.getText().trim();
         
+        if(txtUsuarioNuevo.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Debe Agregar Usuario!", "Error", JOptionPane.ERROR_MESSAGE);
+            txtUsuarioNuevo.setText("");
+            return;
+        }
+        
         if(listaUsuarios.VerificarUsuarioEnLista(nombreUsuario)){
-            JOptionPane.showMessageDialog( this,  "Usuario ya existe!");
+            JOptionPane.showMessageDialog(this, "Usuario ya existe!", "Error", JOptionPane.ERROR_MESSAGE);
             txtUsuarioNuevo.setText("");
             return;
         }

@@ -218,7 +218,7 @@ public class FrmLogIn extends javax.swing.JFrame {
         String usuario = txtUsuario.getText().trim();
         
         if( usuario.isBlank()){
-            JOptionPane.showMessageDialog( this,  "Usuario es campo obligatorio");
+            JOptionPane.showMessageDialog(this, "Ingrese usuario!", "Error", JOptionPane.ERROR_MESSAGE);
             txtUsuario.setText("");
             return;
         }
@@ -233,7 +233,7 @@ public class FrmLogIn extends javax.swing.JFrame {
                 frmBiblioteca.setVisible(true);
                 this.setVisible(false);
             } else {
-                JOptionPane.showMessageDialog( this,  "Usuario no encontrado!");
+                JOptionPane.showMessageDialog(this, "Usuario no encontrado!", "Error", JOptionPane.ERROR_MESSAGE);
                 txtUsuario.setText("");
             }
         

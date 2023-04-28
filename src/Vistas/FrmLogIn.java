@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package inicio;
+package Vistas;
 
 /**
  *
@@ -201,7 +201,13 @@ public class FrmLogIn extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresoConvertidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoConvertidorActionPerformed
-        // TODO add your handling code here:
+        if(evt.getSource()== btnIngresoConvertidor){
+            FrmLotesEditor lotes = new FrmLotesEditor(data);  
+            lotes.setDefaultCloseOperation(FrmEditor.DISPOSE_ON_CLOSE);
+            lotes.setLocationRelativeTo(null);
+            lotes.setVisible(true);
+            this.setVisible(false);
+        }
     }//GEN-LAST:event_btnIngresoConvertidorActionPerformed
 
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUsuarioActionPerformed

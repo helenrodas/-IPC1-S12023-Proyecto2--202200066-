@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package inicio;
+package Vistas;
 
 import Data.Data;
 import HandlersImagen.BlancoYNegroJPG;
@@ -30,6 +30,7 @@ public class FrmEditor extends javax.swing.JFrame {
     public FrmEditor(Data data) {
         initComponents();
         this.data=data;
+        this.setTitle("Editor");
     }
 
     /**
@@ -181,9 +182,9 @@ public class FrmEditor extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(4, 4, 4)
+                .addGap(10, 10, 10)
                 .addComponent(btnRegresar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnSeleccionarImagen)

@@ -4,7 +4,7 @@
  */
 package main;
 
-import inicio.FrmLogIn;
+import Vistas.FrmLogIn;
 
 /**
  *

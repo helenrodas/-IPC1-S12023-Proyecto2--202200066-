@@ -18,7 +18,18 @@ public class CListaUsuarios {
         nuevoNodo.nodoSiguiente = inicio;
         inicio = nuevoNodo;
     }
+    
+    
+    
 }
+
+    public CNodoUsuario getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(CNodoUsuario inicio) {
+        this.inicio = inicio;
+    }
 
    public void mostrarLista(){
         CNodoUsuario nodoActual = inicio;
@@ -47,6 +58,19 @@ public class CListaUsuarios {
         }
         return  false;
     }
+    
+//    public void CargarUsuarios() {
+//       // jComboBoxUsuarios.removeAllItems();
+//       // jComboBoxUsuarios.addItem("---");
+//
+//        CNodoUsuario nodoUsuario = listaUsuarios.getInicio();
+//        while (nodoUsuario != null) {
+//            jComboBoxUsuarios.addItem(nodoUsuario.getNombreUsuario());
+//            nodoUsuario = nodoUsuario.getSiguiente();
+//        }
+//    }
+    
+    
     
     public CNodoUsuario GetUsuario(String usuario){
          CNodoUsuario temporal = inicio;

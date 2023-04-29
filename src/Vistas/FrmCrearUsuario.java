@@ -22,6 +22,7 @@ public class FrmCrearUsuario extends javax.swing.JFrame {
         initComponents();
         this.data=data;
         listaUsuarios=data.getListaUsuarios();
+        this.setTitle("Registrarse");
         
     }
 

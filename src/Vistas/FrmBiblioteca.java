@@ -34,6 +34,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     public FrmBiblioteca(Data data, String nombreUsuario) {
         initComponents();
         this.data=data;
+        this.setTitle("Biblioteca");
         modelo = new DefaultListModel();
         listaUsuarios=data.getListaUsuarios();
         usuarioActual = listaUsuarios.GetUsuario(nombreUsuario);

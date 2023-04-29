@@ -4,7 +4,11 @@
  */
 package Vistas;
 
+import Data.CListaUsuarios;
+import Data.CNodoUsuario;
 import Data.Data;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,11 +16,16 @@ import Data.Data;
  */
 public class FrmLotesEditor extends javax.swing.JFrame {
     Data data;
+    private CListaUsuarios listaUsuarios;
+    CNodoUsuario usuarioActual;
     /**
      * Creates new form FrmLotesEditor
      */
     public FrmLotesEditor(Data data) {
         initComponents();
+        listaUsuarios=data.getListaUsuarios();
+        
+        CargarUsuarios();
         this.setTitle("Lotes Editor");
         this.data=data;
     }
@@ -56,6 +65,12 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Usuario:");
+
+        jComboBoxUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxUsuariosActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Categoria:");
 
@@ -280,6 +295,85 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
+    private void jComboBoxUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxUsuariosActionPerformed
+        
+        if( jComboBoxUsuarios.getSelectedItem() == null || 
+                jComboBoxUsuarios.getSelectedItem().toString().contains("---")){
+            return;
+        }
+        
+        String usuario = jComboBoxUsuarios.getSelectedItem().toString();
+        
+        if (usuario.contains(usuario))
+        
+        jComboBoxCategorias.removeAllItems();
+        jComboBoxCategorias.addItem("---");
+        
+        
+        
+        usuarioActual = listaUsuarios.GetUsuario(usuario);
+ 
+        ArrayList<String> listaCategorias = usuarioActual.getListaCategorias();
+        jComboBoxCategorias.removeAllItems();
+        jComboBoxCategorias.addItem("---");
+            
+        for (String categoria : listaCategorias) {
+           String nombreCategoria = categoria;
+           
+           jComboBoxCategorias.addItem(nombreCategoria);
+        }
+   
+    }//GEN-LAST:event_jComboBoxUsuariosActionPerformed
+
+    public void CargarUsuarios() {
+        jComboBoxUsuarios.removeAllItems();
+        jComboBoxUsuarios.addItem("---");
+
+        CNodoUsuario nodoUsuario = listaUsuarios.getInicio();
+        while (nodoUsuario != null) {
+            jComboBoxUsuarios.addItem(nodoUsuario.getNombreUsuario());
+            nodoUsuario = nodoUsuario.getNodoSiguiente();
+        }
+    }
+    
+//    private void CargarCategorias(){
+//        ArrayList<CKiosco> listaKioscos = data.getListaKioscos();
+//        jComboBoxKioscos.removeAllItems();
+//        jComboBoxKioscos.addItem("---");
+//            
+//        for (CKiosco kiosco : listaKioscos) {
+//           String nombreKiosco = kiosco.getNombreKiosco();
+//           String regionKiosco = kiosco.getRegionKiosco();
+//           String kioscoAgregado = nombreKiosco +""+"||" +""+ regionKiosco;
+//           
+//           jComboBoxKioscos.addItem(kioscoAgregado);
+//        }
+//    }
+    
+    
+//    public void CargarCategorias() {
+//        jComboBoxCategorias.removeAllItems();
+//        jComboBoxCategorias.addItem("---");
+//
+//        String usuario = jComboBoxUsuarios.getSelectedItem().toString();
+//        CNodoUsuario nodoUsuario = listaUsuarios.getInicio();
+//        while (nodoUsuario != null && !nodoUsuario.getNombreUsuario().equals(usuario)) {
+//            nodoUsuario = nodoUsuario.getNodoSiguiente();
+//        }
+//
+//        if (nodoUsuario != null) {
+//            CListaCategorias listaCategorias = nodoUsuario.getListaCategorias();
+//            CNodoCategoria nodoCategoria = listaCategorias.getInicio();
+//            while (nodoCategoria != null) {
+//                jComboBoxCategorias.addItem(nodoCategoria.getCategoria().getNombreCategoria());
+//                nodoCategoria = nodoCategoria.getSiguiente();
+//            }
+//        }
+//    }
+
+
+
+    
 //    /**
 //     * @param args the command line arguments
 //     */

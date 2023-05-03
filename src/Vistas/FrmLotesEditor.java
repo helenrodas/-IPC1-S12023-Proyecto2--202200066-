@@ -4,10 +4,13 @@
  */
 package Vistas;
 
+import Data.CListaImagenes;
 import Data.CListaUsuarios;
 import Data.CNodoUsuario;
+import Data.CNodoImagen;
 import Data.Data;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,14 +19,21 @@ import javax.swing.JOptionPane;
  */
 public class FrmLotesEditor extends javax.swing.JFrame {
     Data data;
+    DefaultListModel modelo;
     private CListaUsuarios listaUsuarios;
+    private CListaImagenes listaImagenes;
     CNodoUsuario usuarioActual;
+    
+   
     /**
      * Creates new form FrmLotesEditor
      */
     public FrmLotesEditor(Data data) {
         initComponents();
         listaUsuarios=data.getListaUsuarios();
+        modelo = new DefaultListModel();
+       // listaImagenes = data.getListaImagenes();
+        
         
         CargarUsuarios();
         this.setTitle("Lotes Editor");
@@ -75,6 +85,11 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         jLabel2.setText("Categoria:");
 
         btnMostrar.setText("Mostrar");
+        btnMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.setViewportView(jListColaImagenes);
 
@@ -214,8 +229,8 @@ public class FrmLotesEditor extends javax.swing.JFrame {
                             .addComponent(jPanelConsola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34)
-                                .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(43, 43, 43)
+                                .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(37, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
@@ -255,8 +270,8 @@ public class FrmLotesEditor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEjecutar))
                         .addGap(32, 32, 32)
                         .addComponent(jLabel5)
                         .addGap(4, 4, 4)
@@ -309,8 +324,6 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         jComboBoxCategorias.removeAllItems();
         jComboBoxCategorias.addItem("---");
         
-        
-        
         usuarioActual = listaUsuarios.GetUsuario(usuario);
  
         ArrayList<String> listaCategorias = usuarioActual.getListaCategorias();
@@ -325,6 +338,25 @@ public class FrmLotesEditor extends javax.swing.JFrame {
    
     }//GEN-LAST:event_jComboBoxUsuariosActionPerformed
 
+    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
+        if( jComboBoxUsuarios.getSelectedItem() == null || 
+                jComboBoxUsuarios.getSelectedItem().toString().contains("---")){
+            JOptionPane.showMessageDialog(this, "Seleccione Usuario!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if( jComboBoxCategorias.getSelectedItem() == null || 
+                jComboBoxCategorias.getSelectedItem().toString().contains("---")){
+            JOptionPane.showMessageDialog(this, "Seleccione Categoria!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }     
+        
+        String categoria = jComboBoxCategorias.getSelectedItem().toString();
+        cargarImagenes(categoria);
+        
+
+    }//GEN-LAST:event_btnMostrarActionPerformed
+
     public void CargarUsuarios() {
         jComboBoxUsuarios.removeAllItems();
         jComboBoxUsuarios.addItem("---");
@@ -336,43 +368,31 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         }
     }
     
-//    private void CargarCategorias(){
-//        ArrayList<CKiosco> listaKioscos = data.getListaKioscos();
-//        jComboBoxKioscos.removeAllItems();
-//        jComboBoxKioscos.addItem("---");
-//            
-//        for (CKiosco kiosco : listaKioscos) {
-//           String nombreKiosco = kiosco.getNombreKiosco();
-//           String regionKiosco = kiosco.getRegionKiosco();
-//           String kioscoAgregado = nombreKiosco +""+"||" +""+ regionKiosco;
-//           
-//           jComboBoxKioscos.addItem(kioscoAgregado);
-//        }
-//    }
+    
+    private void cargarImagenes(String categoria){
+        String path = "";
+        String fileName="";
+       // modelo.removeAllElements();
+        listaImagenes = usuarioActual.getListaImagenes();
+        CNodoImagen nodoImagen = listaImagenes.getInicio();
+
+        while (nodoImagen != null) {
+            if(categoria.equals(nodoImagen.getCategoria())){
+
+                path=nodoImagen.getImagePath();
+                fileName=path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf('.'));
+                jListColaImagenes.setModel(modelo);
+                modelo.addElement(fileName);
+            }
+            if(nodoImagen.getNodoSiguiente() != null) {
+                nodoImagen = nodoImagen.getNodoSiguiente(); 
+            } else {
+                break; 
+            }
+        }
+    }
     
     
-//    public void CargarCategorias() {
-//        jComboBoxCategorias.removeAllItems();
-//        jComboBoxCategorias.addItem("---");
-//
-//        String usuario = jComboBoxUsuarios.getSelectedItem().toString();
-//        CNodoUsuario nodoUsuario = listaUsuarios.getInicio();
-//        while (nodoUsuario != null && !nodoUsuario.getNombreUsuario().equals(usuario)) {
-//            nodoUsuario = nodoUsuario.getNodoSiguiente();
-//        }
-//
-//        if (nodoUsuario != null) {
-//            CListaCategorias listaCategorias = nodoUsuario.getListaCategorias();
-//            CNodoCategoria nodoCategoria = listaCategorias.getInicio();
-//            while (nodoCategoria != null) {
-//                jComboBoxCategorias.addItem(nodoCategoria.getCategoria().getNombreCategoria());
-//                nodoCategoria = nodoCategoria.getSiguiente();
-//            }
-//        }
-//    }
-
-
-
     
 //    /**
 //     * @param args the command line arguments

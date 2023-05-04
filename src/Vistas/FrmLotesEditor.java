@@ -10,6 +10,7 @@ import Data.CNodoUsuario;
 import Data.CNodoImagen;
 import Data.Data;
 import Hilos.HiloBN;
+import Hilos.HiloBarra;
 import Hilos.HiloCambioBmp;
 import Hilos.HiloCopiaJpg;
 import Hilos.HiloModificar;
@@ -43,8 +44,6 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         listaUsuarios=data.getListaUsuarios();
         modelo = new DefaultListModel();
         listaImagenesEdicion = new ArrayList<>();
-       // listaImagenes = data.getListaImagenes();
-        
         
         CargarUsuarios();
         this.setTitle("Lotes Editor");
@@ -80,8 +79,9 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0));
         jProgressBarProceso = new javax.swing.JProgressBar();
         jLabel5 = new javax.swing.JLabel();
-        jPanelConsola = new javax.swing.JPanel();
         btnRegresar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextConsola = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -185,21 +185,9 @@ public class FrmLotesEditor extends javax.swing.JFrame {
 
         jLabel4.setText("Consola de Ejecucion");
 
+        jProgressBarProceso.setForeground(new java.awt.Color(255, 204, 153));
+
         jLabel5.setText("Cantidad Procesada");
-
-        jPanelConsola.setBackground(new java.awt.Color(255, 255, 255));
-        jPanelConsola.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        javax.swing.GroupLayout jPanelConsolaLayout = new javax.swing.GroupLayout(jPanelConsola);
-        jPanelConsola.setLayout(jPanelConsolaLayout);
-        jPanelConsolaLayout.setHorizontalGroup(
-            jPanelConsolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
-        );
-        jPanelConsolaLayout.setVerticalGroup(
-            jPanelConsolaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
-        );
 
         btnRegresar.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
         btnRegresar.setText("Regresar");
@@ -209,6 +197,10 @@ public class FrmLotesEditor extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
+
+        jTextConsola.setColumns(20);
+        jTextConsola.setRows(5);
+        jScrollPane2.setViewportView(jTextConsola);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,23 +218,23 @@ public class FrmLotesEditor extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(140, 140, 140)
                                 .addComponent(jLabel5))
-                            .addComponent(jProgressBarProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jProgressBarProceso, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(185, 185, 185)
                                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(140, 140, 140)
                                 .addComponent(jLabel4))
-                            .addComponent(jPanelConsola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
-                                .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                .addComponent(btnEjecutar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2))))
+                .addContainerGap(42, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jLabel1)
@@ -291,9 +283,9 @@ public class FrmLotesEditor extends javax.swing.JFrame {
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)
                         .addComponent(jLabel4)
-                        .addGap(4, 4, 4)
-                        .addComponent(jPanelConsola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -364,38 +356,39 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         
         String categoria = jComboBoxCategorias.getSelectedItem().toString();
         cargarImagenes(categoria);
-        
-        
-   // jListToArrayList(jListColaImagenes);
     }//GEN-LAST:event_btnMostrarActionPerformed
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
         
+        HiloBarra hiloBarra = new HiloBarra(jProgressBarProceso,listaImagenesEdicion);
+            hiloBarra.start();
+        
         if(jCheckBoxBlancoNegro.isSelected()){
-            HiloBN hiloBN = new HiloBN(listaImagenesEdicion);
+            HiloBN hiloBN = new HiloBN(listaImagenesEdicion, jTextConsola);
             hiloBN.start();
         }
         if(jCheckBoxRGB.isSelected()){
-            HiloRGB hiloRgb = new HiloRGB(listaImagenesEdicion);
+            HiloRGB hiloRgb = new HiloRGB(listaImagenesEdicion, jTextConsola);
             hiloRgb.start();
         }
         if(jCheckBoxModificarImagen.isSelected()){
-            HiloModificar hiloMod = new HiloModificar(listaImagenesEdicion);
+            HiloModificar hiloMod = new HiloModificar(listaImagenesEdicion, jTextConsola);
             hiloMod.start();
         }
         if(jCheckBoxModificarImagen.isSelected()){
-            HiloModificar hiloMod = new HiloModificar(listaImagenesEdicion);
+            HiloModificar hiloMod = new HiloModificar(listaImagenesEdicion, jTextConsola);
             hiloMod.start();
         }
         if(jCheckBoxCopiarAJpg.isSelected()){
-            HiloCopiaJpg hiloCopia = new HiloCopiaJpg(listaImagenesEdicion);
+            HiloCopiaJpg hiloCopia = new HiloCopiaJpg(listaImagenesEdicion, jTextConsola);
             hiloCopia.start();
         }
         if(jCheckBoxJpgABmp.isSelected()){
-            HiloCambioBmp hiloCambioBmp = new HiloCambioBmp(listaImagenesEdicion);
+            HiloCambioBmp hiloCambioBmp = new HiloCambioBmp(listaImagenesEdicion, jTextConsola);
             hiloCambioBmp.start();
         }
         
+        jTextConsola.setText("");
     }//GEN-LAST:event_btnEjecutarActionPerformed
 
     public void CargarUsuarios() {
@@ -413,7 +406,6 @@ public class FrmLotesEditor extends javax.swing.JFrame {
     private void cargarImagenes(String categoria){
         String path = "";
         String fileName="";
-       // modelo.removeAllElements();
         listaImagenes = usuarioActual.getListaImagenes();
         CNodoImagen nodoImagen = listaImagenes.getInicio();
 
@@ -433,40 +425,7 @@ public class FrmLotesEditor extends javax.swing.JFrame {
             }
         }
     }
-    
-//    public  ArrayList<String> jListToArrayList() {
-//        
-//        int totalImagesInList = jListColaImagenes.getModel().getSize();
-//        
-//        for (int i = 0; i < totalImagesInList ; i++) {
-//            
-//         // Path pathh = Paths.get(jListColaImagenes.getModel().getElementAt(i));
-//         //  Path fileName = pathh.toAbsolutePath();
-//            String element = jListColaImagenes.getModel().getElementAt(i);
-//            Path pathh = Paths.get(element);
-//            Path fileName = pathh.toAbsolutePath();
-//           listaImagenesEdicion.add(fileName.toString() + ".jpg");
-//        }
-//        return listaImagenesEdicion;
-//    }
-    
-    
-    
-//    public ArrayList<String> jListToArrayList(JList<String> jListColaImagenes) {
-//        //ArrayList<String> listaImagenesEdicion = new ArrayList<>();
-//        for (int i = 0; i < jListColaImagenes.getModel().getSize(); i++) {
-//            
-//            String nombreImagen = jListColaImagenes.getModel().getElementAt(i); 
-//            //File imagenFile = new File(nombreImagen);
-//            //String imgPath = imagenFile.getParentFile().getAbsolutePath();
-//
-//            
-//            //String dato = jListColaImagenes.getModel().getElementAt(i);
-//            listaImagenesEdicion.add(nombreImagen+ ".jpg");
-//        }
-//        return listaImagenesEdicion;
-//    }
-//    
+      
     
     
 //    /**
@@ -524,8 +483,9 @@ public class FrmLotesEditor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JList<String> jListColaImagenes;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanelConsola;
     private javax.swing.JProgressBar jProgressBarProceso;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextConsola;
     // End of variables declaration//GEN-END:variables
 }

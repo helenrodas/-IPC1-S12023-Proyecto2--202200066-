@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Hilos/HiloCambioBmp.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Vistas/FrmEditor.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Hilos/HiloCopiaJpg.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Hilos/HiloModificar.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/main/Main.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Hilos/HiloRGB.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Vistas/FrmLotesEditor.java</file>
+            <file>file:/P:/Programacion/PracticasJava/ejemploproyecto/src/Hilos/HiloBN.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -9,8 +9,17 @@ import Data.CListaUsuarios;
 import Data.CNodoUsuario;
 import Data.CNodoImagen;
 import Data.Data;
+import Hilos.HiloBN;
+import Hilos.HiloCambioBmp;
+import Hilos.HiloCopiaJpg;
+import Hilos.HiloModificar;
+import Hilos.HiloRGB;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +32,7 @@ public class FrmLotesEditor extends javax.swing.JFrame {
     private CListaUsuarios listaUsuarios;
     private CListaImagenes listaImagenes;
     CNodoUsuario usuarioActual;
+    ArrayList<String> listaImagenesEdicion;
     
    
     /**
@@ -32,6 +42,7 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         initComponents();
         listaUsuarios=data.getListaUsuarios();
         modelo = new DefaultListModel();
+        listaImagenesEdicion = new ArrayList<>();
        // listaImagenes = data.getListaImagenes();
         
         
@@ -97,7 +108,6 @@ public class FrmLotesEditor extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        OpcionesEdicion.add(jCheckBoxRGB);
         jCheckBoxRGB.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxRGB.setText("Rojo Verde Azul y Sepia");
         jCheckBoxRGB.setActionCommand("RGB");
@@ -107,7 +117,6 @@ public class FrmLotesEditor extends javax.swing.JFrame {
             }
         });
 
-        OpcionesEdicion.add(jCheckBoxJpgABmp);
         jCheckBoxJpgABmp.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxJpgABmp.setText("JPG a BMP y viceversa");
         jCheckBoxJpgABmp.setActionCommand("Jpg_Bmp");
@@ -117,12 +126,10 @@ public class FrmLotesEditor extends javax.swing.JFrame {
             }
         });
 
-        OpcionesEdicion.add(jCheckBoxCopiarAJpg);
         jCheckBoxCopiarAJpg.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxCopiarAJpg.setText("Copiar a JPG");
         jCheckBoxCopiarAJpg.setActionCommand("Copiar_JPG");
 
-        OpcionesEdicion.add(jCheckBoxModificarImagen);
         jCheckBoxModificarImagen.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxModificarImagen.setText("Modificar Imagen");
         jCheckBoxModificarImagen.setActionCommand("Modificar_Imagen");
@@ -132,7 +139,6 @@ public class FrmLotesEditor extends javax.swing.JFrame {
             }
         });
 
-        OpcionesEdicion.add(jCheckBoxBlancoNegro);
         jCheckBoxBlancoNegro.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
         jCheckBoxBlancoNegro.setText("Blanco y Negro");
         jCheckBoxBlancoNegro.setActionCommand("Blanco_Negro");
@@ -171,6 +177,11 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         );
 
         btnEjecutar.setText("Ejecturar");
+        btnEjecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEjecutarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Consola de Ejecucion");
 
@@ -354,8 +365,38 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         String categoria = jComboBoxCategorias.getSelectedItem().toString();
         cargarImagenes(categoria);
         
-
+        
+   // jListToArrayList(jListColaImagenes);
     }//GEN-LAST:event_btnMostrarActionPerformed
+
+    private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
+        
+        if(jCheckBoxBlancoNegro.isSelected()){
+            HiloBN hiloBN = new HiloBN(listaImagenesEdicion);
+            hiloBN.start();
+        }
+        if(jCheckBoxRGB.isSelected()){
+            HiloRGB hiloRgb = new HiloRGB(listaImagenesEdicion);
+            hiloRgb.start();
+        }
+        if(jCheckBoxModificarImagen.isSelected()){
+            HiloModificar hiloMod = new HiloModificar(listaImagenesEdicion);
+            hiloMod.start();
+        }
+        if(jCheckBoxModificarImagen.isSelected()){
+            HiloModificar hiloMod = new HiloModificar(listaImagenesEdicion);
+            hiloMod.start();
+        }
+        if(jCheckBoxCopiarAJpg.isSelected()){
+            HiloCopiaJpg hiloCopia = new HiloCopiaJpg(listaImagenesEdicion);
+            hiloCopia.start();
+        }
+        if(jCheckBoxJpgABmp.isSelected()){
+            HiloCambioBmp hiloCambioBmp = new HiloCambioBmp(listaImagenesEdicion);
+            hiloCambioBmp.start();
+        }
+        
+    }//GEN-LAST:event_btnEjecutarActionPerformed
 
     public void CargarUsuarios() {
         jComboBoxUsuarios.removeAllItems();
@@ -383,6 +424,7 @@ public class FrmLotesEditor extends javax.swing.JFrame {
                 fileName=path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf('.'));
                 jListColaImagenes.setModel(modelo);
                 modelo.addElement(fileName);
+                listaImagenesEdicion.add(path);
             }
             if(nodoImagen.getNodoSiguiente() != null) {
                 nodoImagen = nodoImagen.getNodoSiguiente(); 
@@ -392,6 +434,39 @@ public class FrmLotesEditor extends javax.swing.JFrame {
         }
     }
     
+//    public  ArrayList<String> jListToArrayList() {
+//        
+//        int totalImagesInList = jListColaImagenes.getModel().getSize();
+//        
+//        for (int i = 0; i < totalImagesInList ; i++) {
+//            
+//         // Path pathh = Paths.get(jListColaImagenes.getModel().getElementAt(i));
+//         //  Path fileName = pathh.toAbsolutePath();
+//            String element = jListColaImagenes.getModel().getElementAt(i);
+//            Path pathh = Paths.get(element);
+//            Path fileName = pathh.toAbsolutePath();
+//           listaImagenesEdicion.add(fileName.toString() + ".jpg");
+//        }
+//        return listaImagenesEdicion;
+//    }
+    
+    
+    
+//    public ArrayList<String> jListToArrayList(JList<String> jListColaImagenes) {
+//        //ArrayList<String> listaImagenesEdicion = new ArrayList<>();
+//        for (int i = 0; i < jListColaImagenes.getModel().getSize(); i++) {
+//            
+//            String nombreImagen = jListColaImagenes.getModel().getElementAt(i); 
+//            //File imagenFile = new File(nombreImagen);
+//            //String imgPath = imagenFile.getParentFile().getAbsolutePath();
+//
+//            
+//            //String dato = jListColaImagenes.getModel().getElementAt(i);
+//            listaImagenesEdicion.add(nombreImagen+ ".jpg");
+//        }
+//        return listaImagenesEdicion;
+//    }
+//    
     
     
 //    /**

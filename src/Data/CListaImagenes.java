@@ -32,64 +32,30 @@ public class CListaImagenes {
         }        
     }
     
-//    public void EliminarImagen(String path, String categoria) {
-//        CNodoImagen actual = new CNodoImagen(path, categoria);
-//        CNodoImagen anterior = new CNodoImagen(path, categoria);
-//
-//        actual = inicio;
-//        anterior = ultimo;
-//
-//        while (actual != null) {
-//            if (actual.imagePath==path) {
-//                if (actual == inicio) {
-//                    inicio = inicio.nodoSiguiente;
-//                    inicio.nodoAnterior=null;
-//                } else if (actual == ultimo) {
-//                    anterior.nodoSiguiente = null;
-//                    ultimo = anterior;
-//                } else {
-//                    anterior.nodoSiguiente = actual.nodoSiguiente;
-//                    actual.nodoSiguiente.nodoAnterior= actual.nodoSiguiente;
-//                }
-//            }
-//            anterior = actual;
-//            actual = actual.nodoSiguiente;
-//        }
-//    }
-    
-    public void EliminarImagen(String path, String categoria){
-        CNodoImagen temporal= inicio;
-        boolean encontrado = false;
-        while(temporal != null && !encontrado){
-            encontrado= temporal.getImagePath()==path;
-            if(!encontrado){
-                temporal=temporal.getNodoSiguiente();
-            }
-        }
-        if(encontrado){
-            if(temporal==inicio)
-                inicio=temporal.getNodoSiguiente();
-            else{
-                temporal.getNodoAnterior().setNodoSiguiente(temporal.getNodoSiguiente());
-                if(temporal.getNodoSiguiente() != null){
-                    temporal.getNodoSiguiente().setNodoAnterior(temporal.getNodoAnterior());
+    public void EliminarImagen(String path, String categoria) {
+        CNodoImagen actual = new CNodoImagen(path, categoria);
+        CNodoImagen anterior = new CNodoImagen(path, categoria);
+
+        actual = inicio;
+        anterior = ultimo;
+
+        while (actual != null) {
+            if (actual.imagePath==path) {
+                if (actual == inicio) {
+                    inicio = inicio.nodoSiguiente;
+                    inicio.nodoAnterior=null;
+                } else if (actual == ultimo) {
+                    anterior.nodoSiguiente = null;
+                    ultimo = anterior;
+                } else {
+                    anterior.nodoSiguiente = actual.nodoSiguiente;
+                    actual.nodoSiguiente.nodoAnterior= actual.nodoAnterior;
                 }
             }
-            temporal= null;
-            
-            if(temporal.getNodoAnterior()==null && temporal.getNodoSiguiente()==null){
-                temporal=null;
-            }
+            anterior = actual;
+            actual = actual.nodoSiguiente;
         }
-        
     }
-    
-    
-    
-    
-    
-    
-    
     
     public CNodoImagen getFinListaImagenes(){
         CNodoImagen temporal = this.inicio;

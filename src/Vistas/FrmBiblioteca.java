@@ -260,11 +260,11 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         String categoriaSeleccionada = jListCategorias.getSelectedValue();
         imagenTemporal = usuarioActual.getListaImagenes().getInicio(); 
        
-        
-        
         if(imagenTemporal != null){
             if(categoriaSeleccionada.equals(imagenTemporal.getCategoria())) {
                 rutaTemporal = imagenTemporal.getImagePath();
+                System.out.println("Siguiente");
+                System.out.println(rutaTemporal);
                 Image imagenNueva = new ImageIcon(rutaTemporal).getImage();
                 ImageIcon iconoNuevo = new ImageIcon(imagenNueva.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
                 lblImagen.setIcon(iconoNuevo);
@@ -284,6 +284,8 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         if(imagenTemporal != null){
             if(categoriaSeleccionada.equals(imagenTemporal.getCategoria())) {
                 rutaTemporal = imagenTemporal.getImagePath();
+                System.out.println("Anterior");
+                System.out.println(rutaTemporal);
                 Image imagenNueva = new ImageIcon(rutaTemporal).getImage();
                 ImageIcon iconoNuevo = new ImageIcon(imagenNueva.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
                 lblImagen.setIcon(iconoNuevo);
@@ -335,11 +337,13 @@ public class FrmBiblioteca extends javax.swing.JFrame {
             //String ruta = imagenActual.getImagePath();
 
             if (imagenActual != null) {
-                
+                try{
                 usuarioActual.ListaImagenes.EliminarImagen(rutaTemporal, categoriaSeleccionada);
                 System.out.println("<url eliminado>" + rutaTemporal);
                 JOptionPane.showMessageDialog(this, "la imagen ha sido eliminada");
-
+                }catch(Exception e){
+                    e.getMessage();
+                }
             }
 
         } else {

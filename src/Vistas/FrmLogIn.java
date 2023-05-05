@@ -24,11 +24,6 @@ public class FrmLogIn extends javax.swing.JFrame {
         this.data=data;
         this.setTitle("Ugallery");
         listaUsuarios=data.getListaUsuarios();
-        
-    
-    
-    
-        //CListaUsuario listaUsuarios = new CListaUsuarios();
     }
 
     /**
@@ -232,7 +227,6 @@ public class FrmLogIn extends javax.swing.JFrame {
         CNodoUsuario nodoUsuario = listaUsuarios.GetUsuario(usuario);
         
             if(nodoUsuario != null){
-                //String usuarioEncontrado = nodoUsuario.GetNodoUsuario();
                 FrmBiblioteca frmBiblioteca = new FrmBiblioteca(data, nodoUsuario.getNombreUsuario());     
                 frmBiblioteca.setDefaultCloseOperation(FrmBiblioteca.DISPOSE_ON_CLOSE);
                 frmBiblioteca.setLocationRelativeTo(null);
@@ -241,9 +235,7 @@ public class FrmLogIn extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario no encontrado!", "Error", JOptionPane.ERROR_MESSAGE);
                 txtUsuario.setText("");
-            }
-        
-        
+            }    
     }//GEN-LAST:event_btnIngresarBibliotecaActionPerformed
 
     private void btnIngresoEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoEditorActionPerformed
@@ -255,46 +247,10 @@ public class FrmLogIn extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_btnIngresoEditorActionPerformed
-
     
             public void CloseAutenticacion(){
             super.dispose();
         }
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(FrmLogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new FrmLogIn().setVisible(true);
-//            }
-//        });
-//    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearUsuario;
     private javax.swing.JButton btnIngresarBiblioteca;

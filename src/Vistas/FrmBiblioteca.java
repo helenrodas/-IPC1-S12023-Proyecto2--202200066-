@@ -22,7 +22,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class FrmBiblioteca extends javax.swing.JFrame {
     
     Data data;
-    private CListaUsuarios listaUsuarios;
+    public CListaUsuarios listaUsuarios;
     public CListaImagenes listarImagenes;
     DefaultListModel modelo;
     static String rutaTemporal = "";
@@ -40,7 +40,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         listaUsuarios=data.getListaUsuarios();
         usuarioActual = listaUsuarios.GetUsuario(nombreUsuario);
         txtUsuarioRegistrado.setText(nombreUsuario);
-        CListaImagenes listarImagen = new CListaImagenes();
         jListCategorias.setModel(modelo);
         
         cargarCategorias();
@@ -51,7 +50,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
             public void valueChanged(ListSelectionEvent e) {
                 String selectedValue = jListCategorias.getSelectedValue();
                 txtCategoria.setText(selectedValue);
-                txtCategoria.setEditable(false);
                 lblImagen.setIcon(null);
             }
         
@@ -213,7 +211,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         usuarioActual.AgregarCategoria(nuevaCategoria);
         cargarCategorias();
         txtCategoria.setText("");
-   
     }//GEN-LAST:event_btnAgregarCategoriaActionPerformed
 
     private void btnEliminarCateogoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCateogoriaActionPerformed
@@ -222,14 +219,11 @@ public class FrmBiblioteca extends javax.swing.JFrame {
            if( categoriaSeleccionada.isBlank()){
                 JOptionPane.showMessageDialog(this, "No hay categoria para eliminar!", "Error", JOptionPane.ERROR_MESSAGE);
                 txtCategoria.setText("");
-                txtCategoria.setEditable(true);
                 return;
             }
         
         usuarioActual.eliminarCategoria(categoriaSeleccionada);
         cargarCategorias();
-        txtCategoria.setEditable(true);
-        
     }//GEN-LAST:event_btnEliminarCateogoriaActionPerformed
 
     private void btnAgregarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarImagenActionPerformed
@@ -256,7 +250,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarImagenActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-     //   String rutaTemporal = "";
         String categoriaSeleccionada = jListCategorias.getSelectedValue();
         imagenTemporal = usuarioActual.getListaImagenes().getInicio(); 
        
@@ -278,7 +271,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-      //   String rutaTemporal = "";
          String categoriaSeleccionada = jListCategorias.getSelectedValue();
          
         if(imagenTemporal != null){
@@ -301,7 +293,6 @@ public class FrmBiblioteca extends javax.swing.JFrame {
 
     private void btnMostrarImagenesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarImagenesActionPerformed
     String categoriaSeleccionada = jListCategorias.getSelectedValue();
-    String rutaImagen="";
     String rutaTemporal = "";
 
     imagenActual = usuarioActual.getListaImagenes().getInicio();
@@ -325,82 +316,35 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         btnAnterior.setEnabled(false);
         btnSiguiente.setEnabled(false);
     }
-
-             
     }//GEN-LAST:event_btnMostrarImagenesActionPerformed
 
     private void btnEliminarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarImagenActionPerformed
     if (jListCategorias.getSelectedValue() != null) {
-            //aqui almaceno en un string el objeto seleccionado de la list 
 
             String categoriaSeleccionada = jListCategorias.getSelectedValue();
-            //String ruta = imagenActual.getImagePath();
 
             if (imagenActual != null) {
                 try{
                 usuarioActual.ListaImagenes.EliminarImagen(rutaTemporal, categoriaSeleccionada);
-                System.out.println("<url eliminado>" + rutaTemporal);
-                JOptionPane.showMessageDialog(this, "la imagen ha sido eliminada");
+                System.out.println("<ruta a eliminar>" + rutaTemporal);
+                JOptionPane.showMessageDialog(this, "Imagen Eliminada!");
                 }catch(Exception e){
                     e.getMessage();
                 }
             }
-
         } else {
-            JOptionPane.showMessageDialog(this, "Debes de selecciona una categoria, para eliminar dicha imagen");
+            JOptionPane.showMessageDialog(this, "No hay imagen para eliminar");
         }       
     }//GEN-LAST:event_btnEliminarImagenActionPerformed
 
-    
     private void cargarCategorias(){
         ArrayList<String> listaCategorias = usuarioActual.getListaCategorias();
         
         modelo.removeAllElements();
         for (int i = 0; i < listaCategorias.size(); i++) {
-            //jListCategorias.add(listaCategorias.get(i), i);
-            
             modelo.addElement(listaCategorias.get(i));
         }
     }
-    
-    
-    
-    
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(FrmBiblioteca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(FrmBiblioteca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(FrmBiblioteca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(FrmBiblioteca.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new FrmBiblioteca().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarCategoria;

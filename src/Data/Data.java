@@ -9,8 +9,8 @@ package Data;
  * @author lenovo
  */
 public class Data {
-    private CListaUsuarios ListaUsuarios;
-    private CListaImagenes ListaImagenes;
+    public CListaUsuarios ListaUsuarios;
+    public CListaImagenes ListaImagenes;
     
     public Data(){
         ListaUsuarios = new CListaUsuarios();
@@ -31,9 +31,5 @@ public class Data {
 
     public void setListaImagenes(CListaImagenes ListaImagenes) {
         this.ListaImagenes = ListaImagenes;
-    }
-    
-    
- 
-    
+    }    
 }

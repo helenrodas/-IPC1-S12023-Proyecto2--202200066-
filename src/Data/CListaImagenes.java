@@ -9,8 +9,8 @@ package Data;
  * @author lenovo
  */
 public class CListaImagenes {
-    private CNodoImagen inicio;
-    private CNodoImagen ultimo;
+    public CNodoImagen inicio;
+    public CNodoImagen ultimo;
     
     public CListaImagenes(){
         this.inicio = null;

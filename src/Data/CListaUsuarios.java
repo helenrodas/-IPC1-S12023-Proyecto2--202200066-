@@ -9,19 +9,16 @@ package Data;
  * @author lenovo
  */
 public class CListaUsuarios {
-    private CNodoUsuario inicio;    
+    public CNodoUsuario inicio;    
    
     public void insertarNodo(CNodoUsuario nuevoNodo) {
-    if (inicio == null) {
-        inicio = nuevoNodo;
-    } else {
-        nuevoNodo.nodoSiguiente = inicio;
-        inicio = nuevoNodo;
+        if (inicio == null) {
+            inicio = nuevoNodo;
+        } else {
+            nuevoNodo.nodoSiguiente = inicio;
+            inicio = nuevoNodo;
+        }  
     }
-    
-    
-    
-}
 
     public CNodoUsuario getInicio() {
         return inicio;
@@ -58,19 +55,6 @@ public class CListaUsuarios {
         }
         return  false;
     }
-    
-//    public void CargarUsuarios() {
-//       // jComboBoxUsuarios.removeAllItems();
-//       // jComboBoxUsuarios.addItem("---");
-//
-//        CNodoUsuario nodoUsuario = listaUsuarios.getInicio();
-//        while (nodoUsuario != null) {
-//            jComboBoxUsuarios.addItem(nodoUsuario.getNombreUsuario());
-//            nodoUsuario = nodoUsuario.getSiguiente();
-//        }
-//    }
-    
-    
     
     public CNodoUsuario GetUsuario(String usuario){
          CNodoUsuario temporal = inicio;

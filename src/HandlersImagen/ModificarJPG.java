@@ -37,9 +37,6 @@ public class ModificarJPG extends ImageHandler {
         bmp2 = ImageIO.read(bmpTemporal);
     }
     
-    
-    
-    
     @Override
     public void generateFiles() throws Exception {
         for (int i = 0; i < (bmp.getWidth()); i++) {

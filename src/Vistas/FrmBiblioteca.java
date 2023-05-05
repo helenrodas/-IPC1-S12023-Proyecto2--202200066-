@@ -23,8 +23,9 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     
     Data data;
     private CListaUsuarios listaUsuarios;
+    public CListaImagenes listarImagenes;
     DefaultListModel modelo;
-    
+    static String rutaTemporal = "";
     CNodoUsuario usuarioActual;
     CNodoImagen imagenActual;
     CNodoImagen imagenTemporal;
@@ -39,7 +40,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
         listaUsuarios=data.getListaUsuarios();
         usuarioActual = listaUsuarios.GetUsuario(nombreUsuario);
         txtUsuarioRegistrado.setText(nombreUsuario);
-    
+        CListaImagenes listarImagen = new CListaImagenes();
         jListCategorias.setModel(modelo);
         
         cargarCategorias();
@@ -255,7 +256,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarImagenActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        String rutaTemporal = "";
+     //   String rutaTemporal = "";
         String categoriaSeleccionada = jListCategorias.getSelectedValue();
         imagenTemporal = usuarioActual.getListaImagenes().getInicio(); 
        
@@ -277,7 +278,7 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
-         String rutaTemporal = "";
+      //   String rutaTemporal = "";
          String categoriaSeleccionada = jListCategorias.getSelectedValue();
          
         if(imagenTemporal != null){
@@ -327,7 +328,23 @@ public class FrmBiblioteca extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMostrarImagenesActionPerformed
 
     private void btnEliminarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarImagenActionPerformed
-        // TODO add your handling code here:
+    if (jListCategorias.getSelectedValue() != null) {
+            //aqui almaceno en un string el objeto seleccionado de la list 
+
+            String categoriaSeleccionada = jListCategorias.getSelectedValue();
+            //String ruta = imagenActual.getImagePath();
+
+            if (imagenActual != null) {
+                
+                usuarioActual.ListaImagenes.EliminarImagen(rutaTemporal, categoriaSeleccionada);
+                System.out.println("<url eliminado>" + rutaTemporal);
+                JOptionPane.showMessageDialog(this, "la imagen ha sido eliminada");
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Debes de selecciona una categoria, para eliminar dicha imagen");
+        }       
     }//GEN-LAST:event_btnEliminarImagenActionPerformed
 
     
@@ -341,6 +358,9 @@ public class FrmBiblioteca extends javax.swing.JFrame {
             modelo.addElement(listaCategorias.get(i));
         }
     }
+    
+    
+    
     
 //    /**
 //     * @param args the command line arguments

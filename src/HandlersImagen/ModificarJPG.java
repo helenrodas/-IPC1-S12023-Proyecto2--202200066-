@@ -31,7 +31,7 @@ public class ModificarJPG extends ImageHandler {
     public void readFile() throws Exception {
         File file = new File(getFileName());
         jpg = ImageIO.read(file);
-        bmpTemporal = new File("./btnTemporal.bmp");
+        bmpTemporal = new File("src/Imagenes/Temp/Temp.bmp");
         ImageIO.write(jpg, "bmp", bmpTemporal);
         bmp = ImageIO.read(bmpTemporal);
         bmp2 = ImageIO.read(bmpTemporal);
@@ -48,7 +48,7 @@ public class ModificarJPG extends ImageHandler {
                     bmp.setRGB(i, bmp.getHeight() - 1 - j, colorT.getRGB());
                 }
         }
-            ImageIO.write(bmp, "jpg", new File("./Vertical-" + nombreCorto + ".jpg"));
+            ImageIO.write(bmp, "jpg", new File("src/Imagenes/Vertical-" + nombreCorto + ".jpg"));
             bmpTemporal.delete();
 
             for (int i = 0; i < (bmp2.getWidth() + 1) / 2; i++) {
@@ -60,7 +60,7 @@ public class ModificarJPG extends ImageHandler {
                     bmp2.setRGB(bmp2.getWidth() - 1 - i, j, colorT.getRGB());
                 }
             }
-            ImageIO.write(bmp2, "jpg", new File("./Horizontal-" + nombreCorto + ".jpg"));
+            ImageIO.write(bmp2, "jpg", new File("src/Imagenes/Horizontal-" + nombreCorto + ".jpg"));
             bmpTemporal.delete();
         }
 

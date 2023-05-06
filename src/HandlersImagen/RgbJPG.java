@@ -33,7 +33,7 @@ public class RgbJPG extends ImageHandler {
     public void readFile() throws Exception {
         File file = new File(getFileName());
         jpg = ImageIO.read(file);
-        btnTemporal = new File("./btnTemporal.bmp");
+        btnTemporal = new File("src/Imagenes/Temp/Temp.bmp");
         ImageIO.write(jpg, "bmp", btnTemporal);
         bRed = ImageIO.read(btnTemporal);
         bBlue = ImageIO.read(btnTemporal);
@@ -51,7 +51,7 @@ public class RgbJPG extends ImageHandler {
                 bRed.setRGB(x, y, newColorRed.getRGB());
             }
         }
-        ImageIO.write(bRed, "jpg", new File("./Rojo-" + nombreCorto + ".jpg"));
+        ImageIO.write(bRed, "jpg", new File("src/Imagenes/Rojo-" + nombreCorto + ".jpg"));
         btnTemporal.delete();
         
         //Color Azul
@@ -62,7 +62,7 @@ public class RgbJPG extends ImageHandler {
                 bBlue.setRGB(x, y, newColorBlue.getRGB());
             }
         }
-        ImageIO.write(bBlue, "jpg", new File("./Azul-" + nombreCorto + ".jpg"));
+        ImageIO.write(bBlue, "jpg", new File("src/Imagenes/Azul-" + nombreCorto + ".jpg"));
         btnTemporal.delete();
         
         //Color Verde
@@ -73,7 +73,7 @@ public class RgbJPG extends ImageHandler {
                 bGreen.setRGB(x, y, newColorGreen.getRGB());
             }
         }
-        ImageIO.write(bGreen, "jpg", new File("./Verde-" + nombreCorto + ".jpg"));
+        ImageIO.write(bGreen, "jpg", new File("src/Imagenes/Verde-" + nombreCorto + ".jpg"));
         btnTemporal.delete();
         
         //Color Sepia
@@ -84,7 +84,7 @@ public class RgbJPG extends ImageHandler {
                 bSepia.setRGB(x, y, newColorSepia.getRGB());
             }
         }
-        ImageIO.write(bSepia, "jpg", new File("./Sepia-" + nombreCorto + ".jpg"));
+        ImageIO.write(bSepia, "jpg", new File("src/Imagenes/Sepia-" + nombreCorto + ".jpg"));
         btnTemporal.delete();
     }
     

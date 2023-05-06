@@ -30,7 +30,7 @@ public class CopiaJpg extends ImageHandler{
     public void readFile() throws Exception {
         File file = new File(getFileName());
         jpg = ImageIO.read(file);
-        bmpTemporal = new File("./btnTemporal.bmp");
+        bmpTemporal = new File("src/Imagenes/Temp/Temp.bmp");
         ImageIO.write(jpg, "bmp", bmpTemporal);
         bmp = ImageIO.read(bmpTemporal);
 
@@ -38,7 +38,7 @@ public class CopiaJpg extends ImageHandler{
 
     @Override
     public void generateFiles() throws Exception {
-        ImageIO.write(bmp, "jpg", new File("./JPEG-" + nombreCorto + ".jpg"));
+        ImageIO.write(bmp, "jpg", new File("src/Imagenes/JPEG-" + nombreCorto + ".jpg"));
         bmpTemporal.delete();
     }
 }

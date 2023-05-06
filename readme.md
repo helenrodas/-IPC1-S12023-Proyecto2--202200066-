@@ -1,5 +1,6 @@
-# Readme
+# Proyecto 2
 
-Creado: 
-Nombre:
-Descripcion:
+##Nombre:Helen Janet Rodas Castro 
+##Carnet:202200066
+##Curso:IPC 1
+##Seccion: D
